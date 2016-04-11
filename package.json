@@ -1,0 +1,24 @@
+{
+  "name": "no-polling-example",
+  "version": "0.1.0",
+  "description": "experiment with clients that don't poll and are resilient to poor network conditions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkmobile/no-polling-example.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/no-polling-example/issues"
+  },
+  "homepage": "https://github.com/blinkmobile/no-polling-example#readme",
+  "engines" : {
+    "node" : ">=5",
+    "npm" : ">=3"
+  }
+}
