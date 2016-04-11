@@ -2,42 +2,42 @@
 
 'use strict';
 
-const http = require('http');
 const path = require('path');
 
 const Hapi = require('hapi');
 
-const listener = new http.Server();
-
-const server = new Hapi.Server();
-server.connection({
-  listener,
-  port: 3000
-});
-
-// http://hapijs.com/tutorials/serving-files#directory-handler
-server.register(require('inert'), (err) => {
-  if (err) {
-    throw err;
-  }
-
-  server.route({
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        index: true,
-        path: path.join(__dirname, '..', 'dist')
-      }
-    }
+// startHapi (listener: http.Server, port: Number)
+function startHapi (listener, port) {
+  const server = new Hapi.Server();
+  server.connection({
+    autoListen: false,
+    listener
   });
-});
 
-server.start((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('Server running at:', server.info.uri);
-});
+  // http://hapijs.com/tutorials/serving-files#directory-handler
+  server.register(require('inert'), (err) => {
+    if (err) {
+      throw err;
+    }
 
-module.exports = { listener };
+    server.route({
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          index: true,
+          path: path.join(__dirname, '..', 'dist')
+        }
+      }
+    });
+  });
+
+  server.start((err) => {
+    if (err) {
+      throw err;
+    }
+    console.log('Hapi.js service listening...');
+  });
+}
+
+module.exports = { startHapi };
