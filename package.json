@@ -40,7 +40,7 @@
     "rollupify": "^0.2.0"
   },
   "dependencies": {
-    "busmq": "1.4.0",
+    "busmq": "1.5.0",
     "hapi": "13.3.0",
     "inert": "3.2.0"
   }
