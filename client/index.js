@@ -18,6 +18,7 @@ const bus = Bus.create({
   }
 });
 
+// only triggered regarding direct Redis connection
 bus.on('online', () => log('bus online'));
 bus.on('offline', () => log('bus offline'));
 bus.on('error', (err) => log(`bus error: ${err}`));
@@ -25,7 +26,7 @@ bus.on('error', (err) => log(`bus error: ${err}`));
 const SUBJECT = 'heartbeat';
 const startPubSub = (pubsub) => {
   [
-    'subscribed', 'unsubscribed'
+    'reconnecting', 'reconnected', 'subscribed', 'unsubscribed'
   ].forEach((event) => {
     pubsub.on(event, () => log(`pubsub [${SUBJECT}]: event = ${event}`));
   });

@@ -8,10 +8,6 @@ log('bus starting...');
 
 export const bus = busmq(`ws://${location.host}/bus/federated`, 'mysecret');
 
-bus.on('online', () => log('bus online'));
-bus.on('offline', () => log('bus offline'));
-bus.on('error', (err) => log(`bus error: ${err}`));
-
 const SUBJECT = 'heartbeat';
 
 export let pubsub;
@@ -25,7 +21,7 @@ bus.pubsub(SUBJECT, (err, ps) => {
   pubsub = ps;
 
   [
-    'subscribed', 'unsubscribed'
+    'ready', 'reconnecting', 'reconnected', 'subscribed', 'unsubscribed'
   ].forEach((event) => {
     pubsub.on(event, () => log(`pubsub [${SUBJECT}]: event = ${event}`));
   });
