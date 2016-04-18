@@ -21,9 +21,15 @@ bus.pubsub(SUBJECT, (err, ps) => {
   pubsub = ps;
 
   [
-    'ready', 'reconnecting', 'reconnected', 'subscribed', 'unsubscribed'
+    'ready', 'subscribed', 'unsubscribed'
   ].forEach((event) => {
     pubsub.on(event, () => log(`pubsub [${SUBJECT}]: event = ${event}`));
+  });
+
+  [
+    'reconnecting', 'reconnected'
+  ].forEach((event) => {
+    pubsub.fed.on(event, () => log(`pubsub.fed [${SUBJECT}]: event = ${event}`));
   });
 
   pubsub.on('message', (msg) => log(`pubsub [${SUBJECT}]: msg = ${msg}`));
