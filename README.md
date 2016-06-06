@@ -16,4 +16,4 @@ Then point a web browser at: http://docker.local:3000/
 
 ### Development
 
-- to recompile frontend files: `npm run browserify`
+- to recompile frontend files: `npm run build:dist`

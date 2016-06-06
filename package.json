@@ -4,13 +4,14 @@
   "description": "experiment with clients that don't poll and are resilient to poor network conditions",
   "main": "index.js",
   "scripts": {
-    "browserify": "browserify -d -t rollupify -t babelify -e www/index.js | exorcist dist/index.js.map > dist/index.js",
-    "build:dist": "npm-run-all browserify build:html",
+    "browserify": "browserify -d -e www/index.js | exorcist dist/index.js.map > dist/index.js",
+    "build:dist": "npm-run-all -s browserify build:html uglify",
     "build:html": "cp -v www/index.html dist/",
     "eslint": "eslint --fix .",
     "server": "node ./server/index.js",
     "start": "npm-run-all browserify server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "uglify": "uglifyjs --prefix relative --in-source-map dist/index.js.map --source-map dist/index.js.map --compress dead_code,unused --stats --output dist/index.js -- dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "npm": ">=3"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "eslint": "^2.7.0",
@@ -37,12 +39,24 @@
     "eslint-plugin-standard": "^1.3.2",
     "exorcist": "^0.4.0",
     "npm-run-all": "^2.1.1",
-    "rollupify": "^0.3.1"
+    "rollupify": "^0.3.1",
+    "uglify-js": "^2.6.2"
   },
   "dependencies": {
     "busmq": "1.5.4",
     "hapi": "13.4.1",
     "inert": "4.0.0",
     "text-encoding": "0.6.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "browserify": {
+    "transform": [
+      "rollupify",
+      "babelify"
+    ]
   }
 }
